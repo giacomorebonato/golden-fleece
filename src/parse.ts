@@ -1,21 +1,10 @@
-import {
-	number,
-	whitespace,
-	validIdentifierCharacters,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE
-} from './shared';
 import { locate } from 'locate-character';
 import {
-	ParserOptions,
-	Value,
-	ArrayExpression,
-	ObjectExpression,
-	Literal,
-	Property,
-	Identifier,
-	Comment
+	ArrayExpression, Comment, Identifier, Literal, ObjectExpression, ParserOptions, Property, Value
 } from './interfaces';
+import {
+	DOUBLE_QUOTE, number, SINGLE_QUOTE, validIdentifierCharacters, whitespace
+} from './shared';
 
 export function parse(str: string, opts?: ParserOptions) {
 	const parser = new Parser(str, opts);
@@ -79,7 +68,7 @@ export default class Parser {
 
 	allowWhitespaceOrComment() {
 		while (
-			this.index < this.str.length &&
+			this.index < (this.str || '').length &&
 			whitespace.test(this.str[this.index])
 		) {
 			this.index++;
