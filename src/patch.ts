@@ -1,19 +1,12 @@
-import { parse } from './parse';
 import {
-	stringify,
-	stringifyValue,
-	stringifyProperty,
-	stringifyString
-} from './stringify';
-import { whitespace, SINGLE_QUOTE, DOUBLE_QUOTE } from './shared';
-import {
-	Value,
-	Property,
-	ArrayExpression,
-	ObjectExpression,
-	Literal,
-	Comment
+	ArrayExpression, Comment, Literal, ObjectExpression, Property, Value
 } from './interfaces';
+import { parse } from './parse';
+import { DOUBLE_QUOTE, SINGLE_QUOTE, whitespace } from './shared';
+import {
+	stringifyProperty,
+	stringifyString, stringifyValue
+} from './stringify';
 
 export function patch(str: string, value: any) {
 	const counts: Record<string, number> = {};
@@ -177,8 +170,13 @@ function patchArray(
 		} else {
 			// append new element
 			if (newlinesInsideValue) {
+				patched += ',';
+
+				if (indentation.indexOf('\n') === -1) {
+					patched += '\n';
+				}
 				patched +=
-					`,\n${indentation + indentString}` +
+					`${indentation + indentString}` +
 					stringifyValue(value[i], quote, indentation, indentString, true);
 			} else {
 				patched +=

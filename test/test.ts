@@ -1,15 +1,9 @@
 import * as assert from 'assert';
 import * as fleece from '../src/index';
-import json5Tests from './json5';
 import {
-	Value,
-	ArrayExpression,
-	ObjectExpression,
-	Literal,
-	Property,
-	Identifier,
-	Comment
+	Comment, Value
 } from '../src/interfaces';
+import json5Tests from './json5';
 
 describe('golden-fleece', () => {
 	describe('parse', () => {
@@ -601,6 +595,24 @@ multi-line string',
 				output: `{ foo: 3 }`
 			},
 
+			{
+				input: `{
+	a: [
+		1,
+		2,
+		3
+	]
+}`,
+				value: { a: [1, 2, 3, 4] },
+				output: `{
+	a: [
+		1,
+		2,
+		3,
+		4
+	]
+}`
+			},
 			{
 				input: `{ foo: 1, bar: 2, baz: null }`,
 				value: { foo: 1, bar: 2, baz: { qux: 3 } },

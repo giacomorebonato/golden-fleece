@@ -36,7 +36,8 @@
     "build": "npm run build-declarations && rollup -c",
     "fetch_tests": "degit json5/json5-tests test/json5-tests",
     "test": "mocha --opts mocha.opts",
-    "prepublishOnly": "npm test && npm run build"
+    "prepublishOnly": "npm test && npm run build",
+		"prepare": "npm run build"
   },
   "repository": {
     "type": "git",
