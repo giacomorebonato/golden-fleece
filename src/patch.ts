@@ -172,7 +172,7 @@ function patchArray(
 			if (newlinesInsideValue) {
 				patched += ',';
 
-				if (indentation.indexOf('\n') === -1) {
+				if (!indentation.includes('\n') && !indentString.includes('\n')) {
 					patched += '\n';
 				}
 				patched +=
@@ -283,10 +283,15 @@ function patchObject(
 }
 
 function getIndentation(str: string, i: number) {
-	while (i > 0 && !whitespace.test(str[i - 1])) i -= 1;
+	while (i > 0 && !whitespace.test(str[i - 1])) {
+		i -= 1;
+	}
 	const end = i;
 
-	while (i > 0 && whitespace.test(str[i - 1])) i -= 1;
+	while (i > 0 && whitespace.test(str[i - 1])) {
+		i -= 1;
+	}
+
 	return str.slice(i, end);
 }
 
